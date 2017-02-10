@@ -76,7 +76,7 @@ def main():
     """
     This simple script will find out if there is a client connected to the Enterprise network
     It will ask the user to input an IP address for a client device.
-    It will print information if the input iP address is being used by a client or not
+    It will print information if the input IP address is being used by a client or not
     """
 
     # create an auth ticket for APIC-EM
