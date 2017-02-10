@@ -67,7 +67,7 @@ def check_device(interface_ip):
     header = {'accept': 'application/json', 'X-Auth-Token': apic_em_ticket}
     interface_response = requests.get(url, headers=header, verify=False)
     if not interface_response:
-        url = 'https://' + APIC_EM + '/network-device/ip-address/' + interface_ip  # verification required by wireless AP's IP address
+        url = 'https://' + APIC_EM + '/network-device/ip-address/' + interface_ip  # verification required for wireless AP's IP address
         header = {'accept': 'application/json', 'X-Auth-Token': apic_em_ticket}
         device_response = requests.get(url, headers=header, verify=False)
         if not device_response:
