@@ -47,7 +47,7 @@ def get_input_ip():
     :return: the IP address
     """
 
-    ip_address = input('Input the IP address to be validated?  ')
+    ip_address = input('Input the IP address to be validated, (or q to exit) ?  ')
     return ip_address
 
 
@@ -78,9 +78,9 @@ def check_client_ip_address(client_ip):
         else:
             interface_name = host_info['connectedInterfaceName']
             apic_em_device_id = host_info['connectedNetworkDeviceId']
-        hostname = get_hostname_id(deviceId)[0]
-        device_type = get_hostname_id(deviceId)[1]
-        print('The IP address ', clientIP, ' is connected to the network device ', hostname, ',  ', device_type, ',  interface ', interfaceName)
+        hostname = get_hostname_id(apic_em_device_id)[0]
+        device_type = get_hostname_id(apic_em_device_id)[1]
+        print('The IP address ', client_ip, ' is connected to the network device ', hostname, ',  ', device_type, ',  interface ', interface_name)
         return hostname, interface_name
 
 
@@ -95,7 +95,7 @@ def get_hostname_id(device_id):
     """
     hostname = None
     url = 'https://' + APIC_EM + '/network-device/' + device_id
-    header = {'accept': 'application/json', 'X-Auth-Token': apic_em_ticket}
+    header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
     hostname_response = requests.get(url, headers=header, verify=False)
     hostname_json = hostname_response.json()
     hostname = hostname_json['response']['hostname']
@@ -108,7 +108,8 @@ def main():
     This simple script will find out if there is a client connected to the Enterprise network
     It will ask the user to input an IP address for a client device.
     It will print information if the input IP address is being used by a client or not
-    It will find out information about the client, the MAC address and connectivity
+    It will find out information about the client, and the connectivity info
+    There is a loop that will allow running the validation multiple times, until user input is 'q'
     """
 
     # create an auth ticket for APIC-EM
@@ -118,12 +119,12 @@ def main():
 
     # input IP address for client
 
-    client_ip_address = get_input_ip()
-    print('IP Address to be validated:', client_ip_address)
-
-    # check if the input IP address is used by network clients
-
-    check_client_ip_address(client_ip_address)
+    client_ip_address = None
+    while client_ip_address != "q":    # this loop will allow running the validation multiple times, until user input is 'q'
+        client_ip_address = get_input_ip()
+        print('IP Address to be validated:', client_ip_address)
+        if client_ip_address != 'q':
+            check_client_ip_address(client_ip_address)  # check if the input IP address is used by network clients
 
 
 if __name__ == '__main__':
