@@ -2,6 +2,8 @@
 
 # !/usr/bin/env python3
 
+# This will still need work, to be refreshed
+
 import requests
 import json
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -13,6 +15,7 @@ import uniq
 CONTROLLER_URL = 'sandboxapic.cisco.com/api/v1'
 CONTROLLER_USER = 'devnetuser'
 CONTROLLER_PASSW = 'Cisco123!'
+
 
 
 
