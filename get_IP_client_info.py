@@ -20,6 +20,10 @@ APIC_EM_PASSW = 'Cisco123!'
 # client IP addresses to test 10.1.15.117 - wifi
 
 
+def pprint(json_data):
+    print(json.dumps(json_data, indent=4, separators=(' , ', ' : ')))
+
+
 def get_service_ticket():
     """
     This function will generate the Auth ticket required to access APIC-EM
