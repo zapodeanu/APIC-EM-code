@@ -19,6 +19,9 @@ APIC_EM_PASSW = 'Cisco123!'
 # client IP addresses to test 10.2.1.22 - ethernet
 # client IP addresses to test 10.1.15.117 - wifi
 
+def pprint(json_data):
+    print(json.dumps(json_data, indent=4, separators=(' , ', ' : ')))
+
 
 def get_service_ticket():
     """
