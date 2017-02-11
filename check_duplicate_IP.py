@@ -17,6 +17,8 @@ CONTROLLER_USER = 'devnetuser'
 CONTROLLER_PASSW = 'Cisco123!'
 
 
+def pprint(json_data):
+    print(json.dumps(json_data, indent=4, separators=(' , ', ' : ')))
 
 
 def get_service_ticket():
