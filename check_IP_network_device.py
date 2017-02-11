@@ -22,6 +22,10 @@ APIC_EM_PASSW = 'Cisco123!'
 # network device IP address to test 10.2.1.1
 
 
+def pprint(json_data):
+    print(json.dumps(json_data, indent=4, separators=(' , ', ' : ')))
+
+
 def get_service_ticket():
     """
     This function will generate the Auth apic_em_ticket required to access APIC-EM
