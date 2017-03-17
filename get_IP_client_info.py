@@ -1,4 +1,4 @@
-# developed by Gabi Zapodeanu, Cisco Systems, TSA, GPO
+# developed by Gabi Zapodeanu, Cisco Systems, TSA, GSSE, Cisco Systems
 
 # !/usr/bin/env python3
 
@@ -69,11 +69,11 @@ def check_client_ip_address(client_ip):
     payload = {'hostIp': client_ip}
     host_response = requests.get(url, params=payload, headers=header, verify=False)
     host_json = host_response.json()
+    pprint(host_json)
     if not host_json['response']:
         print('The IP address ', client_ip, ' is not used by any client devices')
     else:
         print('The IP address ', client_ip, ' is used by a client device')
-        # print (json.dumps(host_json, indent=4, separators=(' , ', ' : ')))    # sample print json output, optional
         host_info = host_json['response'][0]
         host_type = host_info['hostType']
         if host_type == 'wireless':     # verification required for wireless clients, JSON output is different for wireless vs. wired clients
