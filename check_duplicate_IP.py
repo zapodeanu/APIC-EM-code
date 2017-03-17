@@ -6,8 +6,8 @@
 import requests
 import json
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable insecure https warnings
 
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable insecure https warnings
 
 # declarations for Sandbox APIC-EM API url, username and password
 
@@ -77,16 +77,16 @@ def check_client_ip_address(client_ip):
     else:
         host_info = host_json['response'][0]
         host_type = host_info['hostType']
-        if host_type == 'wireless':     # verification required for wireless clients,
-                                        # JSON output is different for wireless vs. wired clients
+        if host_type == 'wireless':  # verification required for wireless clients,
+            # JSON output is different for wireless vs. wired clients
             device_id = host_info['connectedNetworkDeviceId']
             interface_name = 'VLAN ' + host_info['vlanId']
         else:
             interface_name = host_info['connectedInterfaceName']
             device_id = host_info['connectedNetworkDeviceId']
         hostname = get_hostname_id(device_id)[0]
-        devicetype = get_hostname_id(device_id)[1]
-        print('The IP address ', client_ip, ' is connected to the network device ', hostname, ',  ', devicetype,
+        device_type = get_hostname_id(device_id)[1]
+        print('The IP address ', client_ip, ' is connected to the network device ', hostname, ',  ', device_type,
               ',  interface ', interface_name)
         return hostname, interface_name
 
@@ -96,38 +96,37 @@ def get_interface_name(interface_ip):
     The function will find out if APIC-EM has a network device with the specified IP address configured on an interface
     API call to /interface/ip-address/{ipAddress}, gets list of interfaces with the given IP address.
     The JSON response is different for wireless AP's comparing with switches and routers.
-    There is a nested function, get_hostname_IP , to find out the information about wireless
+    There is a nested function, get_hostname_ip , to find out the information about wireless
     AP's based on the management IP address
     :param interface_ip: IP address to check
     :return: network device hostname
     """
 
-    interfaceInfo = None
     url = 'https://' + APIC_EM + '/interface/ip-address/' + interface_ip
     header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
-    interfaceInfo_response = requests.get(url, headers=header, verify=False)
-    if not interfaceInfo_response:
-        deviceIP = interface_ip
-        url = 'https://' + APIC_EM + '/network-device/ip-address/' + deviceIP   # verification required by
-                                                                                # wireless AP's IP address
+    interface_info_response = requests.get(url, headers=header, verify=False)
+    if not interface_info_response:
+        device_ip = interface_ip
+        url = 'https://' + APIC_EM + '/network-device/ip-address/' + device_ip  # verification required by
+        # wireless AP's IP address
         header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
-        deviceInfo_response = requests.get(url, headers=header, verify=False)
-        if not deviceInfo_response:
+        device_info_response = requests.get(url, headers=header, verify=False)
+        if not device_info_response:
             print('The IP address ', interface_ip, ' is not configured on any network devices')
         else:
-            hostname = get_hostname_IP(deviceIP)[0]
-            devicetype = get_hostname_IP(deviceIP)[1]
-            print('The IP address ', deviceIP, ' is configured on network device ', hostname, ',  ', devicetype)
+            hostname = get_hostname_ip(device_ip)[0]
+            device_type = get_hostname_ip(device_ip)[1]
+            print('The IP address ', device_ip, ' is configured on network device ', hostname, ',  ', device_type)
             return hostname
     else:
-        interfaceInfo_json = interfaceInfo_response.json()
-        interfaceInfo = interfaceInfo_json['response'][0]
-        interface_name = interfaceInfo['portName']
-        device_id = interfaceInfo['deviceId']
+        interface_info_json = interface_info_response.json()
+        interface_info = interface_info_json['response'][0]
+        interface_name = interface_info['portName']
+        device_id = interface_info['deviceId']
         hostname = get_hostname_id(device_id)[0]
-        devicetype = get_hostname_id(device_id)[1]
+        device_type = get_hostname_id(device_id)[1]
         print('The IP address ', interface_ip, ' is configured on network device ', hostname, ',  ',
-              devicetype, ',  interface ', interface_name)
+              device_type, ',  interface ', interface_name)
         return hostname
 
 
@@ -139,32 +138,30 @@ def get_hostname_id(device_id):
     :return: network device hostname and type
     """
 
-    hostname = None
     url = 'https://' + APIC_EM + '/network-device/' + device_id
     header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
     hostname_response = requests.get(url, headers=header, verify=False)
     hostname_json = hostname_response.json()
     hostname = hostname_json['response']['hostname']
-    devicetype = hostname_json['response']['type']
-    return hostname, devicetype
+    device_type = hostname_json['response']['type']
+    return hostname, device_type
 
 
-def get_hostname_IP(deviceIP):
+def get_hostname_ip(device_ip):
     """
     The function will find out the hostname of the network device with the specified management IP address
     API call to sandboxapic.cisco.com/api/v1/network-device/ip-address/{ip-address}
-    :param deviceIP: IP address to check
+    :param device_ip: IP address to check
     :return: network device hostname and type
     """
 
-    hostname = None
-    url = 'https://' + APIC_EM + '/network-device/ip-address/' + deviceIP
+    url = 'https://' + APIC_EM + '/network-device/ip-address/' + device_ip
     header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
     hostname_response = requests.get(url, headers=header, verify=False)
     hostname_json = hostname_response.json()
     hostname = hostname_json['response']['hostname']
-    devicetype = hostname_json['response']['type']
-    return hostname, devicetype
+    device_type = hostname_json['response']['type']
+    return hostname, device_type
 
 
 def main():
@@ -180,7 +177,7 @@ def main():
 
     # create an auth ticket for APIC-EM
 
-    global APIC_EM_TICKET    # make the ticket a global variable in this module
+    global APIC_EM_TICKET  # make the ticket a global variable in this module
     APIC_EM_TICKET = get_service_ticket()
 
     # this loop will allow running the validation multiple times, until user input is 'q'
@@ -195,4 +192,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
