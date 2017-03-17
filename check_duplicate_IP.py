@@ -15,6 +15,12 @@ APIC_EM = 'sandboxapic.cisco.com/api/v1'
 APIC_EM_USER = 'devnetuser'
 APIC_EM_PASSW = 'Cisco123!'
 
+# client IP addresses to test 10.2.1.22 - ethernet connected
+# client IP addresses to test 10.1.15.117 - wifi connected
+# wireless AP IP address to test 10.1.14.3
+# network device IP address to test 10.2.2.2
+# network device IP address to test 10.2.1.1
+
 
 def pprint(json_data):
     """

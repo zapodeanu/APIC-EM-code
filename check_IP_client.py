@@ -21,6 +21,12 @@ APIC_EM_PASSW = 'Cisco123!'
 
 
 def pprint(json_data):
+    """
+    Pretty print JSON formatted data
+    :param json_data:
+    :return:
+    """
+
     print(json.dumps(json_data, indent=4, separators=(' , ', ' : ')))
 
 

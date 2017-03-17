@@ -21,6 +21,12 @@ APIC_EM_PASSW = 'Cisco123!'
 
 
 def pprint(json_data):
+    """
+    Pretty print JSON formatted data
+    :param json_data:
+    :return:
+    """
+
     print(json.dumps(json_data, indent=4, separators=(' , ', ' : ')))
 
 
@@ -69,7 +75,6 @@ def check_client_ip_address(client_ip):
     payload = {'hostIp': client_ip}
     host_response = requests.get(url, params=payload, headers=header, verify=False)
     host_json = host_response.json()
-    pprint(host_json)
     if not host_json['response']:
         print('The IP address ', client_ip, ' is not used by any client devices')
     else:
@@ -78,7 +83,7 @@ def check_client_ip_address(client_ip):
         host_type = host_info['hostType']
         if host_type == 'wireless':     # verification required for wireless clients, JSON output is different for wireless vs. wired clients
             apic_em_device_id = host_info['connectedNetworkDeviceId']
-            interface_name = 'VLAN '+ host_info['vlanId']
+            interface_name = 'VLAN ' + host_info['vlanId']
         else:
             interface_name = host_info['connectedInterfaceName']
             apic_em_device_id = host_info['connectedNetworkDeviceId']
