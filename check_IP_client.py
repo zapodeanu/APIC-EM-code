@@ -79,7 +79,6 @@ def check_client_ip_address(client_ip):
         print('The IP address ', client_ip, ' is not used by any client devices')
     else:
         print('The IP address ', client_ip, ' is used by a client device')
-        # print (json.dumps(host_json, indent=4, separators=(' , ', ' : ')))    # sample print json output, optional
 
 
 def main():
