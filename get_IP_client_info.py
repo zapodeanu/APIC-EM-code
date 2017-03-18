@@ -98,7 +98,6 @@ def check_client_ip_address(client_ip):
             hostname = get_hostname_id(apic_em_device_id)[0]
             device_type = get_hostname_id(apic_em_device_id)[1]
             print('The IP address', client_ip, ', is connected to the network device:', hostname, ', model:', device_type, ', interface VLAN:', host_vlan)
-            interface_name = host_vlan
         else:
 
             # info for ethernet connected clients
@@ -109,8 +108,6 @@ def check_client_ip_address(client_ip):
             device_type = get_hostname_id(apic_em_device_id)[1]
             print('The IP address', client_ip, ', is connected to the network device:', hostname, ', model:',
                   device_type, ', interface:', interface_name, ', VLAN:', host_vlan)
-
-        return hostname, interface_name
 
 
 def get_hostname_id(device_id):
@@ -129,8 +126,8 @@ def get_hostname_id(device_id):
     hostname_response = requests.get(url, headers=header, verify=False)
     hostname_json = hostname_response.json()
     hostname = hostname_json['response']['hostname']
-    devicetype = hostname_json['response']['type']
-    return hostname, devicetype
+    device_type = hostname_json['response']['type']
+    return hostname, device_type
 
 
 def main():

@@ -113,8 +113,6 @@ def check_client_ip_address(client_ip):
             print('The IP address', client_ip, ', is connected to the network device:', hostname, ', model:',
                   device_type, ', interface:', interface_name, ', VLAN:', host_vlan)
 
-        return hostname, interface_name
-
 
 def get_interface_name(interface_ip):
     """
