@@ -9,7 +9,8 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable insecure https warnings
 
-# declarations for Sandbox APIC-EM API url, username and password
+# Declarations for the controller info. The values will need to change for the proper Sandbox info,
+# or the customer controller
 
 APIC_EM = 'sandboxapic.cisco.com/api/v1'
 APIC_EM_USER = 'devnetuser'
