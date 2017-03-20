@@ -163,10 +163,15 @@ def main():
     :return:
     """
 
-    ticket = get_service_ticket()  # create an APIC-EM Auth ticket
-    device_id_list = get_device_ids(ticket)  # build a list with all device id's
+    # create an APIC-EM Auth ticket
+    ticket = get_service_ticket()
+
+    # build a list with all device id's
+    device_id_list = get_device_ids(ticket)
     devices_info = collect_device_info(device_id_list, ticket)
-    filename = get_input_file()  # ask user for filename input
+
+    # ask user for filename input and save file
+    filename = get_input_file()
     output_file = open(filename, 'w', newline='')
     output_writer = csv.writer(output_file)
     for lists in devices_info:
