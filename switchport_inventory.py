@@ -74,8 +74,6 @@ def get_license_device(deviceid):
                         license_info.append(new_license)
             except:
                 pass
-    else:
-        pass
     return license_info
 
 
