@@ -153,7 +153,7 @@ def main():
     This application will create a list of all the APIC-EM discovered network devices, their serial numbers and
     active software licenses.
     We will access a DevNet Sandbox to run this script.
-    Changes to the APIC-Em url, username and password are required if desired to access a different APIC-EM controller.
+    Changes to the APIC-EM url, username and password are required if desired to access a different APIC-EM controller.
     :return:
     """
 

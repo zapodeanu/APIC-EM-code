@@ -37,3 +37,9 @@ Recommendation - run the scripts with the IP or MAC addresses provided at the be
     If the IP address is used by a client it will provide or the hostname of the network device connected to the client,
     the model, and the interface connected to the client using the IP address.
     A while loop will allow to check multiple IP addresses, until user input is 'q'
+
+6.   get_device_license.py
+    This application will create a list of all the APIC-EM discovered network devices, their serial numbers and
+    active software licenses.
+    We will access a DevNet Sandbox to run this script.
+    Changes to the APIC-EM url, username and password are required if desired to access a different APIC-EM controller.
