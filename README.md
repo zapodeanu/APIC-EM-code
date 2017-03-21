@@ -43,3 +43,11 @@ Recommendation - run the scripts with the IP or MAC addresses provided at the be
     active software licenses.
     We will access a DevNet Sandbox to run this script.
     Changes to the APIC-EM url, username and password are required if desired to access a different APIC-EM controller.
+
+7.   switchport_inventory.py
+    This application will create a list of all the APIC-EM discovered network switches, their serial numbers and
+    active software licenses.
+    We will append to each switch an inventory for each access port: switchport number, switchport mode, native VLAN,
+    voice VLAN, MAC address connected to each switchport (coming)
+    We will access a DevNet Sandbox to run this script.
+    Changes to the APIC-EM url, username and password are required if desired to access a different APIC-EM controller.
