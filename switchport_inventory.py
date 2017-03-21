@@ -126,6 +126,14 @@ def get_switch_ids():
     return device_id_list
 
 
+def collect_switchport_info(device_id):
+    """
+    This function will create an inventory of all switchports and relevant information for each switchport
+    :param device_id: APIC-EM switch id
+    :return: list with all the relevant info for each switchport
+    """
+
+
 def collect_switch_info(device_id_list):
     """
     The function will create a list of lists.
@@ -147,6 +155,8 @@ def collect_switch_info(device_id_list):
         for licenses in device_license:  # loop to append the provided active licenses to the device list
             info_list.append(licenses)
         all_switches_info_list.append(info_list)  # append the created list for this device to the list of lists
+        switchport_info_list = collect_switchport_info(device_id)
+        all_switches_info_list.append(switchport_info_list)
     return all_switches_info_list
 
 
@@ -154,8 +164,8 @@ def main():
     """
     This application will create a list of all the APIC-EM discovered network switches, their serial numbers and
     active software licenses.
-    We will follow by creating an inventory for each access port: native VLAN, voice VLAN, MAC address connected
-    to each switchport
+    We will append to each switch an inventory for each access port: native VLAN, voice VLAN, MAC address connected
+    to each switchport, etc.
     We will access a DevNet Sandbox to run this script.
     Changes to the APIC-EM url, username and password are required if desired to access a different APIC-EM controller.
     :return:
