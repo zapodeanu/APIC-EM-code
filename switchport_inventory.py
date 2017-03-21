@@ -129,9 +129,28 @@ def get_switch_ids():
 def collect_switchport_info(device_id):
     """
     This function will create an inventory of all switchports and relevant information for each switchport
+    Call to /interface/network-device/{deviceId}
     :param device_id: APIC-EM switch id
     :return: list with all the relevant info for each switchport
     """
+
+    all_switchport_info_list=[]
+    url = 'https://' + APIC_EM + '/interface/network-device/' + device_id
+    header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
+    switch_response = requests.get(url, headers=header, verify=False)
+    switch_response = switch_response.json()
+    switch_info = switch_response['response']
+    # pprint(switch_info)
+    for ports in switch_info:
+        port_info_list = []
+        if ports.get('className') == 'SwitchPort':
+            port_info_list.append(ports.get('portName'))
+            port_info_list.append(ports.get('portMode'))
+            port_info_list.append(ports.get('nativeVlanId'))
+            port_info_list.append(ports.get('voiceVlan'))
+        all_switchport_info_list.append(port_info_list)
+        # pprint(all_switchport_info_list)  # may be required for troubleshooting
+    return all_switchport_info_list
 
 
 def collect_switch_info(device_id_list):
