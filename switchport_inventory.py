@@ -137,19 +137,19 @@ def collect_switch_info(device_id_list):
     :return: all devices license file
     """
 
-    all_switches_info_file = []
+    all_switches_info_list = []
     for device_id in device_id_list:  # loop to collect data from each device
-        info_file = []
+        info_list = []
         print('device id ', device_id)  # print device id, printing messages will show progress
         host_name = get_hostname_devicetype_serialnumber(device_id)[0]
         serial_number = get_hostname_devicetype_serialnumber(device_id)[2]
-        info_file.append(host_name)
-        info_file.append(serial_number)
+        info_list.append(host_name)
+        info_list.append(serial_number)
         device_license = get_license_device(device_id)  # call the function to provide active licenses
         for licenses in device_license:  # loop to append the provided active licenses to the device list
-            info_file.append(licenses)
-        all_switches_info_file.append(info_file)  # append the created list for this device to the list of lists
-    return all_switches_info_file
+            info_list.append(licenses)
+        all_switches_info_list.append(info_list)  # append the created list for this device to the list of lists
+    return all_switches_info_list
 
 
 def main():
