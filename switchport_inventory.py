@@ -175,7 +175,9 @@ def collect_switch_info(device_id_list):
             info_list.append(licenses)
         all_switches_info_list.append(info_list)  # append the created list for this device to the list of lists
         switchport_info_list = collect_switchport_info(device_id)
-        all_switches_info_list.append(switchport_info_list)
+        for switchports in switchport_info_list:
+            all_switches_info_list.append(switchports)
+        all_switches_info_list.append('')
     return all_switches_info_list
 
 
@@ -187,7 +189,6 @@ def main():
     to each switchport, etc.
     We will access a DevNet Sandbox to run this script.
     Changes to the APIC-EM url, username and password are required if desired to access a different APIC-EM controller.
-    :return:
     """
 
     # create an auth ticket for APIC-EM

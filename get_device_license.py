@@ -164,6 +164,7 @@ def main():
     # build a list with all device id's
     device_id_list = get_device_ids()
     devices_info = collect_device_info(device_id_list)
+    pprint(devices_info)
 
     # ask user for filename input and save file
     filename = get_input_file()
