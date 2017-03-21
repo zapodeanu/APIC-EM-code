@@ -61,14 +61,20 @@ def get_input_file():
 
 def main():
     """
-    This application will create a list of all the APIC-EM discovered network devices, their serial numbers and
+    This application will create a list of all the APIC-EM discovered network switches, their serial numbers and
     active software licenses.
+    We will follow by creating an inventory for each access port: native VLAN, voice VLAN, MAC address connected
+    to each switchport
     We will access a DevNet Sandbox to run this script.
-    Changes to the APIC-Em url, username and password are required if desired to access a different APIC-EM controller.
+    Changes to the APIC-EM url, username and password are required if desired to access a different APIC-EM controller.
     :return:
     """
 
-    ticket = get_service_ticket()  # create an APIC-EM Auth ticket
+    # create an auth ticket for APIC-EM
+
+    global APIC_EM_TICKET  # make the ticket a global variable in this module
+    APIC_EM_TICKET = get_service_ticket()
+
 
 if __name__ == '__main__':
     main()
