@@ -48,18 +48,17 @@ def get_service_ticket():
         return ticket
 
 
-def get_license_device(deviceid, ticket):
+def get_license_device(deviceid):
     """
     The function will find out the active licenses of the network device with the specified device ID
     API call to sandboxapic.cisco.com/api/v1//license-info/network-device/{id}
     :param deviceid: APIC-EM network device id
-    :param ticket: APIC-EM ticket
     :return: license information for the device, as a list with all licenses
     """
 
     license_info = []
     url = 'https://' + APIC_EM + '/license-info/network-device/' + deviceid
-    header = {'accept': 'application/json', 'X-Auth-Token': ticket}
+    header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
     payload = {'deviceid': deviceid}
     device_response = requests.get(url, params=payload, headers=header, verify=False)
     if device_response.status_code == 200:
@@ -80,17 +79,16 @@ def get_license_device(deviceid, ticket):
     return license_info
 
 
-def get_hostname_devicetype_serialnumber(deviceid, ticket):
+def get_hostname_devicetype_serialnumber(deviceid):
     """
     The function will find out the hostname of the network device with the specified device ID
     API call to sandboxapic.cisco.com/api/v1/network-device/{id}
     :param deviceid: APIC-EM network device id
-    :param ticket: APIC-EM ticket
     :return: device hostname, device type, serial number
     """
 
     url = 'https://' + APIC_EM + '/network-device/' + deviceid
-    header = {'accept': 'application/json', 'X-Auth-Token': ticket}
+    header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
     hostname_response = requests.get(url, headers=header, verify=False)
     hostname_json = hostname_response.json()
     hostname = hostname_json['response']['hostname']
@@ -110,16 +108,15 @@ def get_input_file():
     return filename
 
 
-def get_device_ids(ticket):
+def get_device_ids():
     """
     The function will build the ID's list for all network devices
     API call to sandboxapic.cisco.com/api/v1/network-device
-    :param ticket: APIC-EM ticket
     :return: APIC-EM devices id list
     """
     device_id_list = []
     url = 'https://' + APIC_EM + '/network-device'
-    header = {'accept': 'application/json', 'X-Auth-Token': ticket}
+    header = {'accept': 'application/json', 'X-Auth-Token': APIC_EM_TICKET}
     device_response = requests.get(url, headers=header, verify=False)
     device_json = device_response.json()
     device_info = device_json['response']
@@ -129,13 +126,12 @@ def get_device_ids(ticket):
     return device_id_list
 
 
-def collect_device_info(device_id_list, ticket):
+def collect_device_info(device_id_list):
     """
     The function will create a list of lists.
     For each device we will have a list that includes - hostname, Serial Number, and active licenses
     The function will require two values, the list with all device id's and the Auth ticket
     :param device_id_list: APIC-EM devices id list
-    :param ticket: APIC-EM ticket
     :return: all devices license file
     """
 
@@ -143,11 +139,11 @@ def collect_device_info(device_id_list, ticket):
     for device_id in device_id_list:  # loop to collect data from each device
         license_file = []
         print('device id ', device_id)  # print device id, printing messages will show progress
-        host_name = get_hostname_devicetype_serialnumber(device_id, ticket)[0]
-        serial_number = get_hostname_devicetype_serialnumber(device_id, ticket)[2]
+        host_name = get_hostname_devicetype_serialnumber(device_id)[0]
+        serial_number = get_hostname_devicetype_serialnumber(device_id)[2]
         license_file.append(host_name)
         license_file.append(serial_number)
-        device_license = get_license_device(device_id, ticket)  # call the function to provide active licenses
+        device_license = get_license_device(device_id)  # call the function to provide active licenses
         for licenses in device_license:  # loop to append the provided active licenses to the device list
             license_file.append(licenses)
         all_devices_license_file.append(license_file)  # append the created list for this device to the list of lists
@@ -164,11 +160,12 @@ def main():
     """
 
     # create an APIC-EM Auth ticket
-    ticket = get_service_ticket()
+    global APIC_EM_TICKET    # make the ticket a global variable in this module
+    APIC_EM_TICKET = get_service_ticket()
 
     # build a list with all device id's
-    device_id_list = get_device_ids(ticket)
-    devices_info = collect_device_info(device_id_list, ticket)
+    device_id_list = get_device_ids()
+    devices_info = collect_device_info(device_id_list)
 
     # ask user for filename input and save file
     filename = get_input_file()
