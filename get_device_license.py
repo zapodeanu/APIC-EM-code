@@ -16,6 +16,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable in
 APIC_EM = 'sandboxapic.cisco.com/api/v1'
 APIC_EM_USER = 'devnetuser'
 APIC_EM_PASSW = 'Cisco123!'
+APIC_EM_TICKET = None
 
 
 def pprint(json_data):

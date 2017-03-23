@@ -15,6 +15,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable in
 APIC_EM = 'sandboxapic.cisco.com/api/v1'
 APIC_EM_USER = 'devnetuser'
 APIC_EM_PASSW = 'Cisco123!'
+APIC_EM_TICKET = None
 
 # wired client mac address: 5c:f9:dd:52:07:78
 # wired client mac address: e8:9a:8f:7a:22:99

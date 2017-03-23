@@ -15,6 +15,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # Disable in
 APIC_EM = 'sandboxapic.cisco.com/api/v1'
 APIC_EM_USER = 'devnetuser'
 APIC_EM_PASSW = 'Cisco123!'
+APIC_EM_TICKET = None
 
 # client IP addresses to test 10.2.1.22 - ethernet
 # client IP addresses to test 10.1.15.117 - wifi
