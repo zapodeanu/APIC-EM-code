@@ -1,7 +1,10 @@
 # APIC-EM-code
 
-This folder includes sample code to be used with APIC-EM DevNet Sandbox, or other APIC-EM controllers
-Recommendation - run the scripts with the IP or MAC addresses provided at the beginning of the sample code
+This folder includes sample code to be used with APIC-EM DevNet Sandbox, or other APIC-EM controllers.
+
+View each script using your preferred IDE (Integrated Development Environment). Observe the functions and each API call.
+
+Recommendation - run the scripts with the IP or MAC addresses provided at the beginning of each of examples.
 
 1.   check_IP_client.py
     This simple script will find out if there is a client connected to the Enterprise network
