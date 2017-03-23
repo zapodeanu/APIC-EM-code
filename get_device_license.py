@@ -133,7 +133,7 @@ def collect_device_info(device_id_list):
     :return: all devices license file
     """
 
-    all_devices_license_file = []
+    all_devices_license_file = [['Hostname', 'Serial Number', 'License 1', 'License 2']]
     for device_id in device_id_list:  # loop to collect data from each device
         license_file = []
         print('device id ', device_id)  # print device id, printing messages will show progress
@@ -164,7 +164,7 @@ def main():
     # build a list with all device id's
     device_id_list = get_device_ids()
     devices_info = collect_device_info(device_id_list)
-    pprint(devices_info)
+    # pprint(devices_info)  # needed for troubleshooting
 
     # ask user for filename input and save file
     filename = get_input_file()
@@ -173,7 +173,10 @@ def main():
     for lists in devices_info:
         output_writer.writerow(lists)
     output_file.close()
-    # pprint(devices_info)    # print for data validation
+
+    # print to console
+    for devices in devices_info:
+        print('\t'.join([str(info) for info in devices]))
 
 
 if __name__ == '__main__':
