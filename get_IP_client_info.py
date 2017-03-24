@@ -98,7 +98,8 @@ def check_client_ip_address(client_ip):
             apic_em_device_id = host_info['connectedNetworkDeviceId']
             hostname = get_hostname_id(apic_em_device_id)[0]
             device_type = get_hostname_id(apic_em_device_id)[1]
-            print('The IP address', client_ip, ', is connected to the network device:', hostname, ', model:', device_type, ', interface VLAN:', host_vlan)
+            print('The IP address', client_ip, ', is connected to the network device:', hostname, ', model:',
+                  device_type, ', interface VLAN:', host_vlan)
         else:
 
             # info for ethernet connected clients
@@ -154,7 +155,6 @@ def main():
         print('IP Address to be validated:', client_ip_address)
         if client_ip_address != 'q':
             check_client_ip_address(client_ip_address)  # check if the input IP address is used by network clients
-
 
 
 if __name__ == '__main__':
